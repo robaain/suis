@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suis Button</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-image: url('https://cdn.wallpapersafari.com/26/44/l2LxiS.jpg'); /* ← Replace this */
+      background-color: #f4f4f4;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+    }
+    button:nth-child(3) {
+      background-color: #f44336;
+    }
+    button:nth-child(6) {
+      background-color: #f44336;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .inline-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; /* space between text and image */
+    }
+  </style>
+</head>
+<body>
+  <div class="inline-container">
+    <h2>Suis 1</h2>
+    <img id="statusImage" src="https://cdn-icons-png.flaticon.com/128/3679/3679867.png" alt="Status Image" width="50">
+  </div>
+  <button onclick="activateV0()">Turn On</button>
+  <button onclick="deactivateV0()">Turn Off</button>
+  <div class="inline-container">
+    <h2>Suis 2</h2>
+    <img id="statusImage1" src="https://cdn-icons-png.flaticon.com/128/3679/3679867.png" alt="Status Image" width="50">
+  </div>
+  <button onclick="activateV1()">Turn On</button>
+  <button onclick="deactivateV1()">Turn Off</button>
+
+  <script>
+    function activateV0() {
+      const token = 'vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp'; // Replace with your actual Blynk token
+      const value = 0;
+      const imageElement = document.getElementById("statusImage");
+
+      fetch(`https://blynk.cloud/external/api/update?token=${token}&V0=${value}`)
+        .then(response => {
+          alert(response.ok ? 'Suis 1 ON' : 'Error updating Suis 1.');
+          imageElement.src = "https://cdn-icons-png.flaticon.com/128/9605/9605300.png"; // image for V0 = 0
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
+        });	
+    }
+
+    function deactivateV0() {
+      const token = 'vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp'; // Same token
+      const value = 1;
+      const imageElement = document.getElementById("statusImage");
+
+      fetch(`https://blynk.cloud/external/api/update?token=${token}&V0=${value}`)
+        .then(response => {
+          alert(response.ok ? 'Suis 1 OFF' : 'Error updating Suis 1.');
+          imageElement.src = "https://cdn-icons-png.flaticon.com/128/3679/3679867.png"; // image for V0 = 1
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
+        });
+    }
+
+    function activateV1() {
+      const token = 'vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp'; // Replace with your actual Blynk token
+      const value = 0;
+      const imageElement = document.getElementById("statusImage1");
+
+
+      fetch(`https://blynk.cloud/external/api/update?token=${token}&V1=${value}`)
+        .then(response => {
+          alert(response.ok ? 'Suis 2 ON' : 'Error updating Suis 2.');
+          imageElement.src = "https://cdn-icons-png.flaticon.com/128/9605/9605300.png"; // image for V0 = 0
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
+        });	
+    }
+
+    function deactivateV1() {
+      const token = 'vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp'; // Same token
+      const value = 1;
+      const imageElement = document.getElementById("statusImage1");
+
+
+      fetch(`https://blynk.cloud/external/api/update?token=${token}&V1=${value}`)
+        .then(response => {
+          alert(response.ok ? 'Suis 2 OFF' : 'Error updating Suis 2.');
+          imageElement.src = "https://cdn-icons-png.flaticon.com/128/3679/3679867.png"; // image for V0 = 1
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
+        });
+    }
+
+    window.onload = function() {
+      const AUTH_TOKEN = "vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp"; // Replace with your actual token
+      const VIRTUAL_PIN = "V0";
+      const VIRTUAL_PIN1 = "V1";
+      const imageElement = document.getElementById("statusImage");
+      const imageElement1 = document.getElementById("statusImage1");
+
+      fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&${VIRTUAL_PIN}`)
+        .then(response => response.text())
+        .then(value => {
+          if (value === "1") {
+            imageElement.src = "https://cdn-icons-png.flaticon.com/128/3679/3679867.png"; // image for V0 = 1
+          } else {
+            imageElement.src = "https://cdn-icons-png.flaticon.com/128/9605/9605300.png"; // image for V0 = 0
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Blynk data:", error);
+        });
+     fetch(`https://blynk.cloud/external/api/get?token=${AUTH_TOKEN}&${VIRTUAL_PIN1}`)
+        .then(response => response.text())
+        .then(value => {
+          if (value === "1") {
+            imageElement1.src = "https://cdn-icons-png.flaticon.com/128/3679/3679867.png"; // image for V0 = 1
+          } else {
+            imageElement1.src = "https://cdn-icons-png.flaticon.com/128/9605/9605300.png"; // image for V0 = 0
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Blynk data:", error);
+        });
+    };
+
+  </script>
+</body>
+</html>
