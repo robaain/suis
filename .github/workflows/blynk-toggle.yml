@@ -2,7 +2,7 @@ name: Blynk Toggle Twice Daily
 
 on:
   schedule:
-    - cron: '49 14 * * *'  # 10:40 PM UTC+8
+    - cron: '52 14 * * *'  # 10:40 PM UTC+8
   workflow_dispatch: # allows manual trigger from GitHub
 
 jobs:
@@ -12,6 +12,6 @@ jobs:
     steps:
       - name: Turn ON Blynk Pin
         run: |
-          curl "https://blynk.cloud/external/api/update?token=${{ secrets.BLYNK_TOKEN }}&V1=1"
-          sleep 240  # 4 minutes
           curl "https://blynk.cloud/external/api/update?token=${{ secrets.BLYNK_TOKEN }}&V1=0"
+          sleep 240  # 4 minutes
+          curl "https://blynk.cloud/external/api/update?token=${{ secrets.BLYNK_TOKEN }}&V1=1"
