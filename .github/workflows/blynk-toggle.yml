@@ -8,12 +8,12 @@ jobs:
   trigger-blynk:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Blynk API to set V1 to 0
+      - name: Call Blynk API to set V1 to 0 then to 1 after 3 mins
         run: |
           curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=0"
           echo "Response:"
           cat response.txt
-          sleep 240  # wait 4 minutes
+          sleep 180  # wait 3 minutes
           curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=1"
           echo "Response:"
           cat response.txt
