@@ -1,7 +1,7 @@
 name: Blynk Toggle
 on:
   schedule:    
-    - cron: '2 22,10 * * *'  # 6:02 AM and 6:02 PM Malaysia Time (UTC+8)
+    - cron: '52 22,10 * * *'  # 6:02 AM and 6:02 PM Malaysia Time (UTC+8)
   workflow_dispatch:      # allows manual trigger
 
 jobs:
