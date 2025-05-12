@@ -1,17 +1,16 @@
-name: Blynk Toggle Twice Daily
+name: Blynk Toggle
 
 on:
   schedule:
-    - cron: '0 23,11 * * *' # 7AM and 7PM UTC+8 (adjust as needed)
-  workflow_dispatch: # allows manual trigger from GitHub
+    - cron: '30 15 * * *'  # 11:05 PM Malaysia time (UTC+8)
+  workflow_dispatch:      # allows manual trigger
 
 jobs:
-  toggle-blynk:
+  trigger-blynk:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Turn ON Blynk Pin
+      - name: Call Blynk API to set V1 to 0
         run: |
-          curl "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=0"
-          sleep 240  # 4 minutes
-          curl "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=1"
+          curl -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=0"
+          echo "Response:"
+          cat response.txt
