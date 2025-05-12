@@ -2,7 +2,7 @@ name: Blynk Toggle Twice Daily
 
 on:
   schedule:
-    - cron: '10 15 * * *'  # Runs at 14:40 UTC = 10:40 PM UTC+8
+    - cron: '15 15 * * *'  # Runs at 11:15 PM UTC+8 (3:15 PM UTC)
   workflow_dispatch: # allows manual trigger from GitHub
 
 jobs:
