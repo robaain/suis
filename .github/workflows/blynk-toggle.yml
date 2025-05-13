@@ -1,20 +1,39 @@
 name: Blynk Toggle
+
 on:
   schedule:    
-    - cron: '52 22,10 * * *'  # 6:02 AM and 6:02 PM Malaysia Time (UTC+8)
-  workflow_dispatch:      # allows manual trigger
+    - cron: '52 22,10 * * *'  # 6:52 AM and 6:52 PM Malaysia Time (UTC+8)
+  workflow_dispatch:          # allows manual trigger
 
 jobs:
   trigger-blynk:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Blynk API to set V1 to 0 then to 1 after 3 mins
+      - name: Call Blynk API to set V1 to 0 (with retry)
         run: |
-          curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=0"
-          echo "Response:"
-          cat response.txt
-          sleep 180  # wait 3 minutes
-          curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=1"
-          echo "Response:"
-          cat response.txt
+          for i in {1..5}; do
+            echo "Attempt $i: Setting V1 to 0"
+            STATUS=$(curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=0")
+            echo "Response code: $STATUS"
+            cat response.txt
+            if [ "$STATUS" -eq 200 ]; then
+              break
+            fi
+            sleep 10
+          done
 
+      - name: Wait for 3 minutes
+        run: sleep 180
+
+      - name: Call Blynk API to set V1 to 1 (with retry)
+        run: |
+          for i in {1..5}; do
+            echo "Attempt $i: Setting V1 to 1"
+            STATUS=$(curl -L -s -o response.txt -w "%{http_code}" "https://blynk.cloud/external/api/update?token=vkNgFrghz7U5lXtxmtxPXg0PMtUKAPFp&V1=1")
+            echo "Response code: $STATUS"
+            cat response.txt
+            if [ "$STATUS" -eq 200 ]; then
+              break
+            fi
+            sleep 10
+          done
