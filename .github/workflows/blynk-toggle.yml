@@ -22,8 +22,8 @@ jobs:
             sleep 10
           done
 
-      - name: Wait for 3 minutes
-        run: sleep 180
+      - name: Wait for 4 minutes
+        run: sleep 240
 
       - name: Call Blynk API to set V1 to 1 (with retry)
         run: |
